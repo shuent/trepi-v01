@@ -8,9 +8,12 @@
     <div class="off-canvas-sidebar">
       <Sidebar />
     </div>
-    <div class="off-canvas-body">
-      <div id="navbar">
-      </div>
+    <div class="off-canvas-content">
+      <header id="navbar" class="navbar">
+        <section class="navbar-center">
+          <a href="#" class="navbar-brand">Trepi</a>
+        </section>
+      </header>
       <div id="main">
         <router-view/>
       </div>
@@ -40,10 +43,11 @@ export default {
 
 #navbar {
   height: 3.5rem;
-  opacity: 0.1;
-  background: red;
-  margin: auto;
+  background-color: rgba(232, 86, 0, .2);
+  margin: 0 auto;
   width: 100%;
+  position: fixed;
+  padding: 10px;
 
 }
 
@@ -51,9 +55,18 @@ export default {
   text-align: center;
   max-width: 700px;
   margin: auto;
+  margin-top: 3.5rem;
   overflow-y: auto;
   height: 100%;
 
+}
+
+.off-canvas .off-canvas-content{
+  padding: 0;
+}
+
+.navbar .navbar-center {
+  margin: auto;
 }
 
 </style>
