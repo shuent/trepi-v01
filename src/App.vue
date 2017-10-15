@@ -43,11 +43,12 @@ export default {
 
 #navbar {
   height: 3.5rem;
-  background-color: rgba(232, 86, 0, .2);
+  background-color: #fdc672;
   margin: 0 auto;
   width: 100%;
   position: fixed;
   padding: 10px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.25);
 
 }
 
@@ -64,9 +65,15 @@ export default {
 .off-canvas .off-canvas-content{
   padding: 0;
 }
-
 .navbar .navbar-center {
   margin: auto;
+
 }
+@media (min-width:960px) {
+  .navbar .navbar-center{
+    margin: 0 calc(50% - 120px);
+  }
+}
+
 
 </style>
