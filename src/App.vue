@@ -1,23 +1,15 @@
 <template>
 <div id="app">
-  <div class="off-canvas">
-    <input type="checkbox" class="off-canvas-checkbox" id="sidebar-checkbox" name="sidebar-checkbox" hidden>
-    <label class="off-canvas-toggle btn btn-primary btn-lg" for="sidebar-checkbox">
-      <i class="icon icon-menu"></i>
-    </label>
-    <div class="off-canvas-sidebar">
-      <Sidebar />
-    </div>
-    <div class="off-canvas-content">
-      <header id="navbar" class="navbar">
-        <section class="navbar-center">
-          <a href="#" class="navbar-brand">Trepi</a>
-        </section>
-      </header>
-      <div id="main">
-        <router-view/>
-      </div>
-    </div>
+  <Sidebar />
+  <!-- navbar -->
+  <header id="navbar" class="navbar">
+    <section class="navbar-center">
+      <a href="#" class="navbar-brand">Trepi</a>
+    </section>
+  </header>
+
+  <div id="main">
+    <router-view/>
   </div>
 </div>
 </template>
@@ -48,8 +40,7 @@ export default {
   width: 100%;
   position: fixed;
   padding: 10px;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.25);
-
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 #main {
@@ -59,21 +50,8 @@ export default {
   margin-top: 3.5rem;
   overflow-y: auto;
   height: 100%;
-
-}
-
-.off-canvas .off-canvas-content{
-  padding: 0;
 }
 .navbar .navbar-center {
   margin: auto;
-
 }
-@media (min-width:960px) {
-  .navbar .navbar-center{
-    margin: 0 calc(50% - 120px);
-  }
-}
-
-
 </style>

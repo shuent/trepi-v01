@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="recipe">
     {{ $route.params.id }}
-    ppp
+    data from fire store comes here
   </div>
 </template>
 
