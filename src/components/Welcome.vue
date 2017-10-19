@@ -15,6 +15,10 @@ export default {
       msg: 'Welcome to Trepi',
       description: 'This is a training recipe app. See high protains and healthey foods'
     }
+  },
+  created() {
+    //do something after creating vue instance
+    console.log('page');
   }
 }
 </script>

@@ -24,5 +24,8 @@ export default {
 </script>
 
 <style>
+#menu-navi{
+  z-index: 2;
+}
 
 </style>
