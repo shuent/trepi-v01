@@ -3,8 +3,6 @@
 <div class="columns">
 
 <!-- <div id="recipe-card" class="column col-6"> -->
-arrays:
-{{ recipes }}
 <!-- <button @click="getRecipes"> getRecipes</button> -->
 
 <div v-for="recipe in recipes" id="recipe-card" class="column col-6">
@@ -40,6 +38,10 @@ export default {
   },
   methods:{
     getRecipes () {
+      // Todo
+      // この方法だと全て読み込むまで待つので，表示が遅くなる
+      // 画像だけはあとで読み込めるようにしたい．
+      // つかいちいちapi呼んでるのありえん
       var recipeTitleImgRef = this.$firebase.storage().ref().child('img/recipeTitleImg')
       var recipeRef = this.$firebase.firestore().collection('recipes').get()
         .then((querySnapshot) => {

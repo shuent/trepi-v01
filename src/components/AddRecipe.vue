@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="addrecipe">
-    <form class="form-horizontal" v-on:submit.once.prevent="submitForm()">
+    <form class="form-horizontal" v-on:submit.once.stop="submitForm()">
       <div class="form-group">
         <label class="form-label">Recipe title </label>
           <input class="form-input" v-model="recipe.title">
@@ -12,7 +12,6 @@
       <div class="form-group">
         <label class="form-label">Recipe Title Image</label>
           <input @change="selectedFile" type="file" name="file">
-          <button @click.prevent='uploadImg'>Upload Img</button>
       </div>
       <div class="form-group">
         <label class="form-label">Procedure </label>
@@ -56,7 +55,7 @@ export default {
       // var storageRef = this.$firebase.storage().ref()
       // console.log(storageRef.child('img/recipeTitleImg').child('test.img'))
       console.log(result)
-      // this.$router.push({name: 'showRecipe',params: {id: this.recipe.title} })
+      this.$router.push({name: 'showRecipe',params: {id: this.recipe.title} })
     },
     pushFirestore(){
       var db = this.$firebase.firestore()
