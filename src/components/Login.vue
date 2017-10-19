@@ -1,26 +1,16 @@
 <template>
   <div id="login">
-    <button @click='loginAnony'>Login Anonymously</button>
-    <button @click='logout'>Logout</button>
+    <button @click='signInAnonymously'>Login Anonymously</button>
+    <button @click='signOut'>Logout</button>
   </div>
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     methods:{
-      loginAnony () {
-        var auth = this.$firebase.auth().signInAnonymously().catch(function(error){
+      ...mapActions(['signInAnonymously','signOut']),
 
-          if (errorCode === 'auth/operation-not-allowed') {
-            alert('You must enable Anonymous auth in the Firebase Console.');
-          } else {
-            console.error(error);
-          }
-        })
-      },
-      logout () {
-        var st = this.$firebase.auth().signOut()
-      }
     }
 
   }

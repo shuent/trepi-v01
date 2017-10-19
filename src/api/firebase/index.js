@@ -11,5 +11,14 @@ export default {
     auth.onAuthStateChanged(function user(){
       global._App
     })
+  },
+  signInAnonymously() {
+    var res = auth.signInAnonymously()
+    console.log(res);
+  },
+  signOut(){
+    var res = auth.signOut()
+    console.log(res);
   }
+
 }

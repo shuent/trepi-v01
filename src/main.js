@@ -16,7 +16,7 @@ Vue.use(SuiVue)
 
 // firebase/ に移し替える
 // import fbconfig from '@/lib/firebase/config'
-import Firebase from './api/firebase'
+import Firebase from './api/firebase/index'
 // require("firebase/firestore");
 
 Firebase.initFirebase()
