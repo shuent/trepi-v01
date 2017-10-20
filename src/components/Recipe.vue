@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import Firebase from '@/api/firebase/index'
 export default {
   data () {
     return {
@@ -27,27 +28,13 @@ export default {
   methods:{
     getRecipe(id){
       var vm = this
-      var docRef = this.$firebase.firestore().collection('recipes').doc(id);
-      docRef.get().then(function (doc){
-        var data = doc.data()
-        vm.recipe.title = data.title
-        vm.recipe.description = data.description
-        vm.recipe.imgurl = data.imgurl
-        vm.recipe.procedure = data.procedure
-        vm.recipe.ingredients = data.ingredients
-
-        console.log('recipe title '+ vm.recipe.title);
+      Firebase.getRecipe(id).then((recipe) => {
+        vm.recipe = recipe
       })
-      // this.
-      // console.log('recipe title '+ this.recipe.title);
-
-
-
     }
   },
   created () {
     this.getRecipe(this.$route.params.id)
-    // console.log('recipe title '+ this.recipe.title);
 
   }
 }

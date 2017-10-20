@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import Firebase from '@/api/firebase/index'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -36,34 +38,22 @@ export default {
       recipes: []
     }
   },
+  computed:{
+    // recipes (){
+    //   var recipes = this.getRecipes()
+    //   console.log("recipes from home" + recipes);
+    // }
+  },
   methods:{
     getRecipes () {
-      // Todo
-      // この方法だと全て読み込むまで待つので，表示が遅くなる
-      // 画像だけはあとで読み込めるようにしたい．
-      // つかいちいちapi呼んでるのありえん
-      var recipeTitleImgRef = this.$firebase.storage().ref().child('img/recipeTitleImg')
-      var recipeRef = this.$firebase.firestore().collection('recipes').get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              // console.log(`${doc.id} => ${doc.data().title}`);
-              var recipe = {};
-              var recipes = this.recipes
-              recipe.id = doc.id;
-              recipe.title = doc.data().title
-              recipeTitleImgRef.child(doc.data().imgname).getDownloadURL()
-                .then(function(url){
-                  recipe.titleImgScr = url
-                  console.log(recipe.titleImgScr);
-                }).then(function(){
-                  recipes.push(recipe)
-                })
-
-
-            })
-          })
-      console.log('getrecipes called');
+      var vm = this
+      Firebase.getRecipes().then(function(recipes){
+        vm.recipes = recipes
+      })
     }
+    //
+    // },
+
   },
   created (){
     this.getRecipes()
