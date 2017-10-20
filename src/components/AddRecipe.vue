@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import Firebase from '@/api/firebase/index'
+
+
 export default {
   data () {
     return {
@@ -41,53 +44,37 @@ export default {
         procedure:'',
         ingredients:'',
         titleImg: null,
+        imgname: '',
       }
-
     }
   },
   methods: {
     submitForm () {
-      console.log(this.recipe.title);
-      this.uploadImg()
+      // this.uploadImg()
+      console.log(this.recipe);
       var result = this.pushFirestore()
-
-      console.log(error);
-      // var storageRef = this.$firebase.storage().ref()
-      // console.log(storageRef.child('img/recipeTitleImg').child('test.img'))
-      console.log(result)
-      this.$router.push({name: 'showRecipe',params: {id: this.recipe.title} })
+      // this.$router.push({name: 'showRecipe',params: {id: this.recipe.title} })
     },
     pushFirestore(){
-      var db = this.$firebase.firestore()
-      console.log(db)
-      db.collection('recipes').add({
-        title: this.recipe.title,
-        description: this.recipe.description,
-        imgname: this.recipe.titleImg.name,
-        procedure: this.recipe.procedure,
-        ingredients: this.recipe.ingredients,
-      }).then(function(docRef) {
-        console.log('Document wiritten with ID: ', docRef.id)
-
-      }).catch(function(error){
-        console.error('Error adding recipe: ', error)
-      })
+      Firebase.pushRecipe(this.recipe)
     },
     selectedFile (e) {
-      e.preventDefault();
-      let files = e.target.files;
-      this.recipe.titleImg = files[0];
+      e.preventDefault()
+      let files = e.target.files
+      this.recipe.titleImg = files[0]
       if (files[0].type.startsWith('image/')) {
-        console.log('img file selected' + this.recipe.titleImg.name)
+        // console.log('img file selected' + this.recipe.titleImg.name)
+        this.recipe.imgname = files[0].name
+        console.log(this.recipe.imgname);
 
       }else{
-        console.log('not image');
-        this.recipe.titleImg = null;
+        console.log('not image')
+        this.recipe.titleImg = null
       }
     },
     uploadImg () {
       var imgRef = this.$firebase.storage().ref().child('img/recipeTitleImg')
-      imgRef.child(this.recipe.titleImg.name)
+      imgRef.child(this.recipe.imgname)
         .put(this.recipe.titleImg)
         .then(function (querySnapshot) {
           console.log('sucess uploaded img' + querySnapshot);

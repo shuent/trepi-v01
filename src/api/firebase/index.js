@@ -3,7 +3,8 @@ import config from './config'
 require("firebase/firestore");
 
 firebase.initializeApp(config)
-var auth = firebase.auth()
+let auth = firebase.auth()
+let db = firebase.firestore()
 
 export default {
   initFirebase(){
@@ -26,10 +27,11 @@ export default {
     return new Promise((resolve, reject) => {
       var recipes = []
       var recipeTitleImgRef = firebase.storage().ref().child('img/recipeTitleImg')
-      var recipeRef = firebase.firestore().collection('recipes').get()
+      var recipeRef = db.collection('recipes').get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // console.log(`${doc.id} => ${doc.data().title}`);
+
             var recipe = {};
             recipe.id = doc.id;
             recipe.title = doc.data().title
@@ -47,10 +49,11 @@ export default {
     })
   },
 
-  // vm => resolve
+  // TODO
+  // imgurl to imgname
   getRecipe(id){
-    return new Promise((resolve, reject) =>{
-      var docRef = firebase.firestore().collection('recipes').doc(id);
+    return new Promise((resolve, reject) => {
+      var docRef = db.collection('recipes').doc(id);
       var recipe = {}
       docRef.get().then(function (doc){
         var data = doc.data()
@@ -63,6 +66,23 @@ export default {
         resolve(recipe)
       })
     })
+  },
+
+  pushRecipe(recipe){
+    return new Promise((resolve, reject) => {
+      db.collection('recipes').add({
+        title: recipe.title,
+        description: recipe.description,
+        imgname: recipe.imgname,
+        procedure: recipe.procedure,
+        ingredients: recipe.ingredients,
+      }).then(function(docRef) {
+        resolve(docRef)
+      }).catch(function(error){
+        console.error('Error adding recipe: ', error)
+      })
+    })
   }
+
 
 }
