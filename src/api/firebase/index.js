@@ -3,10 +3,16 @@ import config from './config'
 require("firebase/firestore");
 
 firebase.initializeApp(config)
+
 let auth = firebase.auth()
 let db = firebase.firestore()
+let storage = firebase.storage()
 
 export default {
+  auth: auth,
+  db: db,
+  storage: storage,
+
   initFirebase(){
     // Initiates Firebase auth and listen to auth state changes.
     auth.onAuthStateChanged(function user(){
@@ -23,6 +29,9 @@ export default {
   },
 
 
+  // TODO
+  // separate logic of storage and db
+  // so that Home can read content of db without img error
   getRecipes () {
     return new Promise((resolve, reject) => {
       var recipes = []

@@ -49,6 +49,7 @@ export default {
       var vm = this
       Firebase.getRecipes().then(function(recipes){
         vm.recipes = recipes
+        console.log(recipes.length);
       })
     }
     //

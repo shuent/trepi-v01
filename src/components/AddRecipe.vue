@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="addrecipe">
-    <form class="form-horizontal" v-on:submit.once.stop="submitForm()">
+    <form class="form-horizontal" v-on:submit.once.prevent="submitForm()">
       <div class="form-group">
         <label class="form-label">Recipe title </label>
           <input class="form-input" v-model="recipe.title">
@@ -39,6 +39,7 @@ export default {
   data () {
     return {
       recipe: {
+        id: '',
         title: '',
         description:'',
         procedure:'',
@@ -50,13 +51,21 @@ export default {
   },
   methods: {
     submitForm () {
-      // this.uploadImg()
-      console.log(this.recipe);
-      var result = this.pushFirestore()
-      // this.$router.push({name: 'showRecipe',params: {id: this.recipe.title} })
+      this.pushFirestore(()=>{
+        console.log('called after pushed');
+        this.$router.push({name: 'showRecipe',params: {id: this.recipe.id} })
+      })
     },
-    pushFirestore(){
+    pushFirestore(callback){
       Firebase.pushRecipe(this.recipe)
+      .then((docRef)=>{
+        this.recipe.id = docRef.id
+        callback()
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      this.uploadImg()
     },
     selectedFile (e) {
       e.preventDefault()
@@ -73,7 +82,7 @@ export default {
       }
     },
     uploadImg () {
-      var imgRef = this.$firebase.storage().ref().child('img/recipeTitleImg')
+      var imgRef = Firebase.storage.ref().child('img/recipeTitleImg')
       imgRef.child(this.recipe.imgname)
         .put(this.recipe.titleImg)
         .then(function (querySnapshot) {

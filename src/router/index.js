@@ -6,7 +6,7 @@ import Recipe from '@/components/Recipe'
 import AddRecipe from '@/components/AddRecipe'
 import Login from '@/components/Login'
 
-import firebase from 'firebase'
+import Firebase from '@/api/firebase/index'
 
 
 
@@ -52,13 +52,16 @@ let router = new Router({
 })
 export default router
 
+// TODO currentUserの遅延処理
+// 最初nullになってしまうため．
 router.beforeEach((to, from, next) => {
-  let currentUser = firebase.auth().currentUser;
+  let currentUser = Firebase.auth.currentUser;
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) {
-    console.log('required auth' + currentUser);
+    console.log('required auth')
     next('login')
   }
   else next()
+
 })
